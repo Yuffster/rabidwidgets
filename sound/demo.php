@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>MooP3 Player</title>
-<script type="text/javascript" src="mootools-1.2b1.js"></script>
+<script type="text/javascript" src="mootools-1.2.js"></script>
 <script type="text/javascript" src="MooSound.js"></script>
 
 <style type="text/css">
@@ -69,8 +69,8 @@ window.addEvent('domready', function() {
 			this.controls     = new Element('div', {'class':'controls'}).inject(this.el);
 			this.seekbar      = new Element('div', {'class': 'seekbar'}).inject(this.el);
 			this.position     = new Element('div', {'class':'position'}).inject(this.seekbar);
-			this.progressFx   = new Fx.Tween(this.seekbar, 'width', {duration:this.options.progressInterval, unit:'%', link: 'cancel'});
-			this.positionFx   = new Fx.Tween(this.position, 'left', {duration:this.options.positionInterval, unit:'%', link: 'cancel'});
+			this.seekbar.set('tween', {duration:this.options.progressInterval, unit:'%', link: 'cancel'});
+			this.position.set('tween', {duration:this.options.positionInterval, unit:'%', link: 'cancel'});
 			this.playEl       = new Element('img', {'class':'play',  src:'img/play.png',id:'play'+i }).inject(this.controls);
 			this.stopEl       = new Element('img', {'class':'stop',  src:'img/stop.png',id:'stop'+i }).inject(this.controls);
 			this.pauseEl      = new Element('img', {'class':'pause', src:'img/pause.png',id:'pause'+i}).inject(this.controls);
@@ -90,11 +90,11 @@ window.addEvent('domready', function() {
 		'onStop': function() { this.el.removeClass('playing'); },
 		'onProgress': function(loaded, total) {
 			var percent = (loaded / total*100).round(2);
-			this.progressFx.start(percent * .85);
+			this.seekbar.get('tween').start('width', percent * .85);
 		},
 		'onPosition': function(position,duration) {
 			var percent = (position/duration*100).round(2);
-			this.positionFx.start(percent);
+			this.position.get('tween').start('left', percent);
 		},
 		'onID3': function(key, value) {
 			if (key == "TIT2") { this.title.set('text', value); }

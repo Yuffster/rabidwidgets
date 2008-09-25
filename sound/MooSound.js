@@ -10,7 +10,7 @@ var Playlist = new Class({
 			this.setOptions(options);
 			window.addEvent('domready', function() { 
 				this.swiffHome = new Element('div', {id: 'swiffHome'}).setStyles({position:'absolute','top':1,'left':1}).inject(document.body);
-				this.obj = new Swiff(this.options.swfLocation, {width: 1, height: 1, container: this.swiffHome, swLiveConnect: true}).inject(this.swiffHome); 
+				this.obj = new Swiff(this.options.swfLocation, {width: 1, height: 1, container: this.swiffHome, swLiveConnect: true}); 
 			}.bind(this));
 			this.flashLoaded = false;
 			this.loadQueue = [];
@@ -102,7 +102,7 @@ var Sound = new Class({
 		this.url = url;
 		this.id3 = new Hash();
 		this.manager = manager || Playlist;
-		this.swf = this.manager.obj;
+		this.swf = this.manager.obj.toElement();
 		this.playing = false;
 		this.listeners = {};
 		this.filesize = null;
